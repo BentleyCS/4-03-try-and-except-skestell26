@@ -2,15 +2,34 @@
 #https://www.w3schools.com/python/python_try_except.asp
 
 
-def sum(arr : list) -> int:
+def sum(arr: list):
     """
-    Modify the function such that it returns the sum of all numebrs within the given list.
+    Modify the function such that it returns the sum of all numbers within the given list.
+    Ignores strings entirely, even if they represent numbers.
     :param arr:
     :return:
     """
-    pass
+    total = 0.0
+    for num in arr:
+        try:
+            # Only allow int or float; raise TypeError for anything else
+            if not isinstance(num, (int, float)):
+                raise TypeError
+            total += num
+        except TypeError:
+            # Ignore non-numeric values (strings, None, etc.)
+            pass
+    return total
 
-def cleanData(rawData : list) ->list:
+
+def cleanData(rawData: list) -> list:
+    cleaned = []
+    for item in rawData:
+        try:
+            cleaned.append(float(item))
+        except (ValueError, TypeError):
+            pass
+    return cleaned
     """
     modify the function such that it takes in a list as an argument will return a new list that
      contains only the valeus that can be typecast to a float.
@@ -18,7 +37,14 @@ def cleanData(rawData : list) ->list:
     :return:
     """
     pass
-def unreliableCalculator(divisors : list) -> list:
+def unreliableCalculator(divisors: list) -> list:
+    results = []
+    for value in divisors:
+        try:
+            results.append(100 / value)
+        except Exception as e:
+            results.append(type(e).__name__)
+    return results
     """
     Modify the function such that it takes in a list as an argument and returns a new list where each
     index is 100 divided by the values from the input list.
@@ -30,7 +56,14 @@ def unreliableCalculator(divisors : list) -> list:
     pass
 
 
-def upperAll(arr : list) -> None:
+def upperAll(arr: list) -> None:
+    """
+    Uppercases all strings within the given list.
+    Modifies the original list.
+    """
+    for i in range(len(arr)):
+        if isinstance(arr[i], str):
+            arr[i] = arr[i].upper()
     """
     Modiy the function such that is uppercases all strings within the given argument list.
     The string method .upper() turns all characters in as tirng uppercase.
@@ -44,7 +77,14 @@ def upperAll(arr : list) -> None:
     print(x)
 
 
-def firstItems(arr : list) -> list:
+def firstItems(arr: list) -> list:
+    result = []
+    for item in arr:
+        if isinstance(item, list):
+            result.append(item[0])
+        else:
+            result.append(item)
+    return result
     """
     Modify the function below such that given a list of values. Many of the list elements will be lists
     themselves. For any list element that is a list grab the first element from that list. If the list
